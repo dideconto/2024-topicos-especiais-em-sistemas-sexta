@@ -21,9 +21,10 @@ public class Produto
     }
 
     //Características - Atributos e propriedades
-    public string Id { get; set; }
-    public string Nome { get; set; }
-    public string Descricao { get; set; }
+    public string? Id { get; set; }
+    public string? Nome { get; set; }
+    public string? Descricao { get; set; }
     public double Valor { get; set; }
     public DateTime CriadoEm { get; set; }
+    public int Quantidade { get; set; }
 }
