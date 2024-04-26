@@ -1,13 +1,12 @@
 using API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
-Produto produto = new Produto();
-// produto.setNome("Bolacha");
-produto.Nome = "Bolacha";
-// Console.WriteLine(produto.getNome());
-Console.WriteLine(produto.Nome);
+//Registrar o serviço de banco de dados na aplicação
+builder.Services.AddDbContext<AppDataContext>();
+
+var app = builder.Build();
 
 List<Produto> produtos = new List<Produto>();
 produtos.Add(new Produto("Celular", "IOS", 4000));
@@ -20,29 +19,38 @@ produtos.Add(new Produto("Notebook", "Avell", 5000));
 app.MapGet("/", () => "Minha primeira API em C# com watch");
 
 //GET: http://localhost:5225/api/produto/listar
-app.MapGet("/api/produto/listar", () => 
-    produtos);
+app.MapGet("/api/produto/listar",
+    ([FromServices] AppDataContext ctx) =>
+{
+    if (ctx.Produtos.Any())
+    {
+        return Results.Ok(ctx.Produtos.ToList());
+    }
+    return Results.NotFound("Tabela vazia!");
+});
 
 //GET: http://localhost:5225/api/produto/buscar/id_do_produto
-app.MapGet("/api/produto/buscar/{id}", (string id) => 
+app.MapGet("/api/produto/buscar/{id}", (string id,
+    [FromServices] AppDataContext ctx) =>
 {
-    foreach (Produto produtoCadastrado in produtos)
+    //Expressão lambda em c#
+    Produto? produto =
+        ctx.Produtos.FirstOrDefault(x => x.Id == id);
+    if (produto is null)
     {
-        if(produtoCadastrado.Id == id)
-        {
-            return Results.Ok(produtoCadastrado);
-        }
+        return Results.NotFound("Produto não encontrado!");
     }
-    // Produto não encontrado
-    return Results.NotFound("Produto não encontrado!");
+    return Results.Ok(produto);
 });
 
 //POST: http://localhost:5225/api/produto/cadastrar
-app.MapPost("/api/produto/cadastrar", 
-    (Produto produto) => 
+app.MapPost("/api/produto/cadastrar",
+    ([FromBody] Produto produto,
+    [FromServices] AppDataContext ctx) =>
 {
-    //Adicionar o produto dentro da lista
-    produtos.Add(produto);
+    //Adicionar o produto dentro do banco de dados
+    ctx.Produtos.Add(produto);
+    ctx.SaveChanges();
     return Results.Created("", produto);
 });
 

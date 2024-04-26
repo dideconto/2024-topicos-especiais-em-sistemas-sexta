@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20240419140320_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20240426123241_CriarBanco")]
+    partial class CriarBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace API.Migrations
 
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("Valor")
                         .HasColumnType("REAL");
