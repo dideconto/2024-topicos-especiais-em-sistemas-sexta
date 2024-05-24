@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diogo.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20240513193742_Initial")]
-    partial class Initial
+    [Migration("20240517121336_Rel")]
+    partial class Rel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,11 +82,14 @@ namespace Diogo.Migrations
 
             modelBuilder.Entity("Diogo.Models.Folha", b =>
                 {
-                    b.HasOne("Diogo.Models.Funcionario", "Funcionario")
-                        .WithMany()
+                    b.HasOne("Diogo.Models.Funcionario", null)
+                        .WithMany("Folhas")
                         .HasForeignKey("FuncionarioId");
+                });
 
-                    b.Navigation("Funcionario");
+            modelBuilder.Entity("Diogo.Models.Funcionario", b =>
+                {
+                    b.Navigation("Folhas");
                 });
 #pragma warning restore 612, 618
         }

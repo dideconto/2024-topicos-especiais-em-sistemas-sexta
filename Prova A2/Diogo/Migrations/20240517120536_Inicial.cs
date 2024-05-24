@@ -5,25 +5,11 @@
 namespace Diogo.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Funcionarios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
-                    CPF = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Funcionarios", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Folhas",
                 columns: table => new
@@ -38,23 +24,26 @@ namespace Diogo.Migrations
                     SalarioBruto = table.Column<double>(type: "REAL", nullable: false),
                     ImpostoIRRF = table.Column<double>(type: "REAL", nullable: false),
                     ImpostoINSS = table.Column<double>(type: "REAL", nullable: false),
-                    ImpostoFGTS = table.Column<double>(type: "REAL", nullable: false),
-                    FuncionarioId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ImpostoFGTS = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Folhas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Folhas_Funcionarios_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionarios",
-                        principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Folhas_FuncionarioId",
-                table: "Folhas",
-                column: "FuncionarioId");
+            migrationBuilder.CreateTable(
+                name: "Funcionarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    CPF = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcionarios", x => x.Id);
+                });
         }
 
         /// <inheritdoc />

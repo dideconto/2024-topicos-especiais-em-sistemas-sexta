@@ -25,14 +25,14 @@ app.MapGet("/api/funcionario/listar", ([FromServices] AppDataContext ctx) =>
 app.MapPost("/api/folha/cadastrar", ([FromBody] Folha folha,
     [FromServices] AppDataContext ctx) =>
 {
-    //Validar se o funcionário existe
-    Funcionario? funcionario =
-        ctx.Funcionarios.Find(folha.FuncionarioId);
+    // //Validar se o funcionário existe
+    // Funcionario? funcionario =
+    //     ctx.Funcionarios.Find(folha.FuncionarioId);
 
-    if (funcionario is null)
-        return Results.NotFound("Funcionário não encontrado");
+    // if (funcionario is null)
+    //     return Results.NotFound("Funcionário não encontrado");
 
-    folha.Funcionario = funcionario;
+    // folha.Funcionario = funcionario;
 
     //Calcular o salário bruto
     folha.SalarioBruto = folha.Quantidade * folha.Valor;
@@ -72,20 +72,20 @@ app.MapPost("/api/folha/cadastrar", ([FromBody] Folha folha,
 
 app.MapGet("/api/folha/listar", ([FromServices] AppDataContext ctx) =>
 {
-    return Results.Ok(ctx.Folhas.Include(x => x.Funcionario).ToList());
+    // return Results.Ok(ctx.Folhas.Include(x => x.Funcionario).ToList());
 });
 
 app.MapGet("/api/folha/buscar/{cpf}/{mes}/{ano}", ([FromServices] AppDataContext ctx,
     [FromRoute] int mes, [FromRoute] int ano, [FromRoute] string cpf) =>
 {
-    Folha? folha = ctx.Folhas.
-        Include(x => x.Funcionario).
-        FirstOrDefault(f => f.Funcionario.CPF == cpf && f.Mes == mes && f.Ano == ano);
-    if (folha is null)
-    {
-        return Results.NotFound();
-    }
-    return Results.Ok(folha);
+    // Folha? folha = ctx.Folhas.
+    //     Include(x => x.Funcionario).
+    //     FirstOrDefault(f => f.Funcionario.CPF == cpf && f.Mes == mes && f.Ano == ano);
+    // if (folha is null)
+    // {
+    //     return Results.NotFound();
+    // }
+    // return Results.Ok(folha);
 });
 
 app.Run();
