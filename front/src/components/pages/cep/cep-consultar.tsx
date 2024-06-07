@@ -1,34 +1,51 @@
 import { useEffect, useState } from "react";
+import { Endereco } from "../../../models/Endereco";
 
 //EXERCÍCIOS
 //1 - Consultar os produtos da API (CORS)
 //2 - Exibir no HTML uma lista de produtos
 
 function CepConsultar() {
-    const[rua, setRua] = useState("");
+    const [rua, setRua] = useState("");
+    const [bairro, setBairro] = useState("");
+    const [cidade, setCidade] = useState("");
+    const [cep, setCep] = useState("");
 
     //Evento de carregamento do componente
     useEffect(() => {
+        // carregarCep();
+    }, []);
 
-        console.log("o componente carregou...");
-
+    function carregarCep() {
         //FETCH ou AXIOS
-        fetch("https://viacep.com.br/ws/81280330/json/")
-            .then((resposta) =>                 
+        fetch("https://viacep.com.br/ws/" + cep + "/json/")
+            .then((resposta) =>
                 resposta.json()
             )
-            .then((cep) => {
-                console.log(cep.logradouro);
-                setRua(cep.logradouro);
+            .then((endereco: Endereco) => {
+                setRua(endereco.logradouro);
+                setBairro(endereco.bairro);
+                setCidade(endereco.localidade);
             });
-    }, []);
+    }
 
     return (
         <div>
             <h1>Consultar CEP</h1>
+            <input
+                type="text"
+                placeholder="Digite o seu CEP"
+                onBlur={carregarCep}
+                onChange={
+                    (e : any) => setCep(e.target.value)
+                }
+            />
+
             <p>
-                { rua }
+                {rua}
             </p>
+            <button>{bairro}</button><br />
+            <input type="text" disabled value={cidade} />
         </div>
     )
 }
