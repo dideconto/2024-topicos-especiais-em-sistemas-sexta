@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Produto } from "../../../models/Produto";
+import axios from "axios";
 
 function ProdutoListar() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
+
     useEffect(() => {
         carregarProdutos();
     }, []);
@@ -19,35 +21,19 @@ function ProdutoListar() {
             });
     }
 
-    function cadastrarProdutos() {
-        const produto : Produto = {
-            nome : "Feijão",
-            descricao : "Alimento",
-            valor : 20,
-            quantidade: 500
-        };
-
-        //FETCH ou AXIOS
-        fetch("http://localhost:5225/api/produto/cadastrar",
-        {
-            method : "POST",
-            headers : {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(produto)
-        })
-            .then((resposta) =>
-                resposta.json()
-            )
-            .then((produto: Produto) => {
-                console.log(produto);
+    function deletar(id: string) {
+        console.log(`Id: ${id}`);
+        axios
+            .delete(`http://localhost:5225/api/produto/deletar/${id}`)
+            .then(resposta => {
+                console.log(resposta.data);
+                setProdutos(resposta.data);
             });
     }
 
     return (
         <div>
             <h1>Listar Produtos</h1>
-            <button onClick={cadastrarProdutos}>Cadastrar</button>
             <table border={1}>
                 <thead>
                     <tr>
@@ -57,6 +43,7 @@ function ProdutoListar() {
                         <th>Quantidade</th>
                         <th>Valor</th>
                         <th>Criado Em</th>
+                        <th>Deletar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +55,9 @@ function ProdutoListar() {
                             <td>{produto.quantidade}</td>
                             <td>{produto.valor}</td>
                             <td>{produto.criadoEm}</td>
+                            <td>
+                                <button onClick={() => { deletar(produto.id!) }}>Deletar</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

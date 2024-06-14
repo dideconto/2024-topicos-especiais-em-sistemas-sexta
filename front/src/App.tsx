@@ -1,13 +1,43 @@
 import React from 'react';
 import CepConsultar from './components/pages/cep/cep-consultar';
 import ProdutoListar from './components/pages/produto/produto-listar';
+import ProdutoCadastrar from './components/pages/produto/produto-cadastrar';
+import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <h1>APP funcionando!</h1>
-      {/* <CepConsultar/> */}
-      <ProdutoListar />
+      <BrowserRouter>
+        <nav>
+          <ul>
+            <li>
+              <Link to={"/"}>Home</Link>
+            </li>
+            <li>
+              <Link to={"/pages/produto/listar"}>Listar Produtos </Link>
+            </li>
+            <li>
+              <Link to={"/pages/produto/cadastrar"}>Cadastrar Produtos </Link>
+            </li>
+            <li>
+              <Link to={"/pages/cep/consultar"}>Consultar CEP </Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path='/' 
+            element={<ProdutoListar />}/>
+          <Route path='/pages/produto/listar' 
+            element={<ProdutoListar />}/>
+          <Route path='/pages/produto/cadastrar' 
+            element={<ProdutoCadastrar />} />
+          <Route path='/pages/cep/consultar' 
+            element={<CepConsultar />} />
+        </Routes>
+        <footer>
+          <p>Desenvolvido por Diogo Steinke Deconto</p>
+        </footer>
+      </BrowserRouter>
     </div>
   );
 }
