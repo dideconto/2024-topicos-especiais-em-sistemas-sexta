@@ -12,7 +12,7 @@ public class Produto
     }
 
     public Produto
-        (string nome, string descricao, 
+        (string nome, string descricao,
         double valor)
     {
         Nome = nome;
@@ -33,9 +33,11 @@ public class Produto
     [MinLength(3, ErrorMessage = "Mínimo 3 caracteres!")]
     [MaxLength(10, ErrorMessage = "Máximo 10 caracteres!")]
     public string? Descricao { get; set; }
-    
-    [Range(1,1000, ErrorMessage = "Valor entre 1 e 1000!")]
+
+    [Range(1, 1000, ErrorMessage = "Valor entre 1 e 1000!")]
     public double Valor { get; set; }
     public DateTime CriadoEm { get; set; }
     public int Quantidade { get; set; }
+    public string? CategoriaId { get; set; }
+    public Categoria? Categoria { get; set; }
 }

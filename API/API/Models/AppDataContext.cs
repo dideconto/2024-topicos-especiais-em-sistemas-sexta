@@ -8,6 +8,7 @@ public class AppDataContext : DbContext
     //Classes que vão representar as tabelas
     //no banco de dados
     public DbSet<Produto> Produtos { get; set; }
+    public DbSet<Categoria> Categorias { get; set; }
 
     //Configurando qual o banco de dados vai
     //ser utilizado

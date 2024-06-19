@@ -6,8 +6,9 @@ POST http://localhost:5225/api/produto/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "Arroz",
+    "nome" : "Arroz A",
     "descricao" : "Alimento",
     "valor" : 15,
-    "quantidade" : 1500
+    "quantidade" : 1500,
+    "categoriaId" : "ecfbe786-b393-4b06-afe4-0c65b2c44a3b"
 }

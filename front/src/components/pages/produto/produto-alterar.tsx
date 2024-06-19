@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Produto } from "../../../models/Produto";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function ProdutoCadastrar() {
+function ProdutoAlterar() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [quantidade, setQuantidade] = useState("");
   const [valor, setValor] = useState("");
 
-  function cadastrarProduto(e: any) {
+  useEffect(() => {
+    if (id) {
+      fetch(`http://localhost:5225/api/produto/buscar/${id}`)
+        .then((resposta) => resposta.json())
+        .then((produto: Produto) => {
+          setNome(produto.nome);
+          setDescricao(produto.descricao);
+          setQuantidade(produto.quantidade.toString());
+          setValor(produto.valor.toString());
+        });
+    }
+  }, []);
+
+  function alterarProduto(e: any) {
     const produto: Produto = {
       nome: nome,
       descricao: descricao,
@@ -17,10 +31,9 @@ function ProdutoCadastrar() {
       quantidade: parseInt(quantidade),
       categoriaId: "05bdf537-a841-4c50-8823-2e234d0bf0b0",
     };
-
     //FETCH ou AXIOS
-    fetch("http://localhost:5225/api/produto/cadastrar", {
-      method: "POST",
+    fetch(`http://localhost:5225/api/produto/alterar/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -34,11 +47,12 @@ function ProdutoCadastrar() {
   }
   return (
     <div>
-      <h1>Cadastrar Produto</h1>
-      <form onSubmit={cadastrarProduto}>
+      <h1>Alterar Produto</h1>
+      <form onSubmit={alterarProduto}>
         <label>Nome:</label>
         <input
           type="text"
+          value={nome}
           placeholder="Digite o nome"
           onChange={(e: any) => setNome(e.target.value)}
           required
@@ -47,6 +61,7 @@ function ProdutoCadastrar() {
         <label>Descricao:</label>
         <input
           type="text"
+          value={descricao}
           placeholder="Digite o descrição"
           onChange={(e: any) => setDescricao(e.target.value)}
         />
@@ -54,6 +69,7 @@ function ProdutoCadastrar() {
         <label>Quantidade:</label>
         <input
           type="text"
+          value={quantidade}
           placeholder="Digite o quantidade"
           onChange={(e: any) => setQuantidade(e.target.value)}
         />
@@ -61,14 +77,15 @@ function ProdutoCadastrar() {
         <label>Valor:</label>
         <input
           type="text"
+          value={valor}
           placeholder="Digite o valor"
           onChange={(e: any) => setValor(e.target.value)}
         />
         <br />
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Salvar</button>
       </form>
     </div>
   );
 }
 
-export default ProdutoCadastrar;
+export default ProdutoAlterar;

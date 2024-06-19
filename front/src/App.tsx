@@ -1,8 +1,9 @@
-import React from 'react';
-import CepConsultar from './components/pages/cep/cep-consultar';
-import ProdutoListar from './components/pages/produto/produto-listar';
-import ProdutoCadastrar from './components/pages/produto/produto-cadastrar';
-import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
+import React from "react";
+import CepConsultar from "./components/pages/cep/cep-consultar";
+import ProdutoListar from "./components/pages/produto/produto-listar";
+import ProdutoCadastrar from "./components/pages/produto/produto-cadastrar";
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import ProdutoAlterar from "./components/pages/produto/produto-alterar";
 
 function App() {
   return (
@@ -14,10 +15,14 @@ function App() {
               <Link to={"/"}>Home</Link>
             </li>
             <li>
-              <Link to={"/pages/produto/listar"}>Listar Produtos </Link>
+              <Link to={"/pages/produto/listar"}>
+                Listar Produtos{" "}
+              </Link>
             </li>
             <li>
-              <Link to={"/pages/produto/cadastrar"}>Cadastrar Produtos </Link>
+              <Link to={"/pages/produto/cadastrar"}>
+                Cadastrar Produtos{" "}
+              </Link>
             </li>
             <li>
               <Link to={"/pages/cep/consultar"}>Consultar CEP </Link>
@@ -25,14 +30,23 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route path='/' 
-            element={<ProdutoListar />}/>
-          <Route path='/pages/produto/listar' 
-            element={<ProdutoListar />}/>
-          <Route path='/pages/produto/cadastrar' 
-            element={<ProdutoCadastrar />} />
-          <Route path='/pages/cep/consultar' 
-            element={<CepConsultar />} />
+          <Route path="/" element={<ProdutoListar />} />
+          <Route
+            path="/pages/produto/listar"
+            element={<ProdutoListar />}
+          />
+          <Route
+            path="/pages/produto/cadastrar"
+            element={<ProdutoCadastrar />}
+          />
+          <Route
+            path="/pages/cep/consultar"
+            element={<CepConsultar />}
+          />
+          <Route
+            path="/pages/produto/alterar/:id"
+            element={<ProdutoAlterar />}
+          />
         </Routes>
         <footer>
           <p>Desenvolvido por Diogo Steinke Deconto</p>

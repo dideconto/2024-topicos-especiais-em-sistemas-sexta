@@ -1,0 +1,10 @@
+### Listar Produtos
+GET http://localhost:5225/api/categoria/listar
+
+### Cadastrar Produto
+POST http://localhost:5225/api/categoria/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "Alimento"
+}
