@@ -6,5 +6,5 @@ POST http://localhost:5225/api/categoria/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "Alimento"
+    "nome" : "Móvel"
 }
